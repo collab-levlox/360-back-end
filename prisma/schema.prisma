@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  name         String        @db.VarChar(100)
+  email        String?        @unique @db.VarChar(100)
+  password     String?        @db.VarChar(255)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  mobile       String        @unique @db.VarChar(15)
+  role         String       @default("user") @db.VarChar(50)
+  BookingSlots BookingSlot[] @relation("user_bookingSlots")
+
+  @@map("User")
+}
+
+model Configuration {
+  id          Int      @id @default(autoincrement())
+  configKey   String   @unique @db.VarChar(100)
+  configValue String   @db.VarChar(500)
+  description String?  @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  @@map("Configuration")
+}
+
+model AllDaySetting {
+  id                    Int      @id @default(autoincrement())
+  courtType             String   @db.VarChar(50)
+  everydayStartTime     String   @db.VarChar(30)
+  everydayEndTime       String   @db.VarChar(30)
+  defaultWeekdayHoliday String?  @db.VarChar(50)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @default(now())
+  eachSlotPrice         Decimal? @db.Decimal(800, 2)
+
+  @@map("AllDaySetting")
+}
+
+model EachDaySetting {
+  id            Int      @id @default(autoincrement())
+  courtType     String   @db.VarChar(50)
+  date          DateTime
+  startTime     String?  @db.VarChar(30)
+  endTime       String?  @db.VarChar(30)
+  isHoliday     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+  eachSlotPrice Decimal? @db.Decimal(800, 2)
+
+  @@unique([courtType, date])
+  @@map("EachDaySetting")
+}
+
+model BookingSlot {
+  id              Int              @id @default(autoincrement())
+  userId          Int
+  courtType       String           @db.VarChar(50)
+  slotBookedTime  String
+  paidAmount      Decimal          @db.Decimal()
+  balAmount       Decimal          @db.Decimal()
+  date            DateTime
+  bookedBy       String?
+  createdAt       DateTime         @default(now())
+  BookingPayments BookingPayment[]
+  user            User             @relation("user_bookingSlots", fields: [userId], references: [id])
+
+  @@map("BookingSlot")
+}
+
+model BookingPayment {
+  id            Int         @id @default(autoincrement())
+  bookingSlotId Int
+  courtType     String      @db.VarChar(50)
+  paymentStatus String      @default("not yet") @db.VarChar(50)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now())
+  bookingSlot   BookingSlot @relation(fields: [bookingSlotId], references: [id])
+
+  @@map("BookingPayment")
+}

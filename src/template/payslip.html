@@ -1,0 +1,240 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Payroll Slip</title>
+  <style>
+    body { font-family: Arial; }
+    .container { width: 80%; margin: auto; border: 1px solid #ccc; padding: 20px; }
+    h2 { text-align: center; }
+    table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+    th, td { border: 1px solid #333; padding: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Payroll Slip - <%= month %></h2>
+    <p><strong>Employee:</strong> <%= name %></p>
+    <p><strong>Aadhar:</strong> <%= adharCode %></p>
+    <table>
+      <tr><th>Basic Pay</th><td><%= basicPay %></td></tr>
+      <tr><th>OT Amount</th><td><%= otAmount %></td></tr>
+      <tr><th>EPF</th><td><%= epfAmount %></td></tr>
+      <tr><th>ESIC</th><td><%= esicAmount %></td></tr>
+      <tr><th>BATA</th><td><%= bata %></td></tr>
+      <tr><th>Net Pay</th><td><%= netPay %></td></tr>
+    </table>
+  </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Payslip</title>
+  </head>
+  <style>
+    .payslip-container {
+      max-width: 800px;
+      margin: 0 auto;
+      font-family: Arial, sans-serif;
+    }
+
+    .payslip-header {
+      text-align: center;
+      border: 1px solid #000;
+    }
+    h2 {
+      font-size: 28px;
+      padding: 10px;
+      margin: 0 !important;
+      color: #000000;
+      background-color: #9cc2e6;
+      border-bottom: 1px solid #000;
+    }
+    h3 {
+      font-size: 18px;
+      padding: 8px 10px 8px;
+      margin: 0 !important;
+      color: #000000;
+      background-color: #deeaf6;
+    }
+
+    .employee-details p {
+      padding: 10px;
+      margin: 0;
+      border-left: 1px solid #000;
+      border-right: 1px solid #000;
+    }
+    hr,
+    table {
+      margin: 0 !important;
+    }
+
+    .salary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .salary-table th,
+    .salary-table td {
+      border: 1px solid #000000;
+      padding: 8px;
+      text-align: left;
+    }
+    .salary-table th {
+      background-color: #deeaf6;
+      font-weight: 600;
+    }
+
+    .earning-head {
+      background-color: #9cc2e6 !important;
+      color: #000;
+      font-weight: 600 !important;
+      text-align: center;
+    }
+
+    .deduction-head {
+      background-color: #9cc2e6 !important;
+      color: #000;
+      font-weight: 600 !important;
+      text-align: center;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 40px;
+      padding: 10px 0;
+      font-size: 14px;
+      border: 0px 1px 1px 1px solid #000 !important;
+    }
+  </style>
+  <body>
+    <div class="payslip-container">
+      <div class="payslip-header">
+        <h2><%= companyName %></h2>
+        <h3>Pay Slip</h3>
+      </div>
+
+      <div class="employee-details">
+        <p><strong>Employee Name:</strong> <%= name %></p>
+        <p><strong>Designation:</strong> <%= designation %></p>
+        <p><strong>Bank info:</strong> <%= bankAccount %> / <%= ifscCode %> </p>
+        <p><strong>Month:</strong> <%= month %></p>
+      </div>
+
+      <table class="salary-table">
+        <thead>
+          <tr>
+            <th colspan="2" class="earning-head">Earnings</th>
+            <th colspan="2" class="deduction-head">Deductions</th>
+          </tr>
+          <tr>
+            <th>Salary Head</th>
+            <th>Amount</th>
+            <th>Salary Head</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Basic</td>
+            <td><%= basicPay %></td>
+            <td>PF Employee</td>
+            <td><%= epfAmount %></td>
+          </tr>
+          <tr>
+            <td>Over Time</td>
+            <td><%= otAmount %></td>
+            <td>ESI Employee</td>
+            <td><%= esicAmount %></td>
+          </tr>
+          <tr>
+            <td>Conv. All</td>
+            <td>-</td>
+            <td>AB amount</td>
+            <td><%= AbAmount %></td>
+          </tr>
+          <tr>
+            <td>Trans. All</td>
+            <td>-</td>
+            <td>PT Tax</td>
+            <td><%= ptAmount %></td>
+          </tr>
+          <tr>
+            <td>CEA</td>
+            <td>-</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Others</td>
+            <td><%= bata %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Medical Allowance</td>
+            <td>-</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><strong>Gross Pay</strong></td>
+            <td><%= netPay %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>PF Employer</td>
+            <td>-</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>ESI Employer</td>
+            <td>-</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Medical</td>
+            <td>-</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Aadhar Number</td>
+            <td><%= adharCode %></td>
+            <td></td>
+            <td></td>
+          </tr>
+            <td><strong>Salary</strong></td>
+            <td><%= overAllSalary %></td>
+            <td><strong>Total Deduction</strong></td>
+            <td><%= totalDeduction %></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="footer">
+        <div
+          style="border-top: 1px solid #9cc2e6; width: 25%; padding-top: 3px"
+        >
+          Prepared by
+        </div>
+        <div
+          style="border-top: 1px solid #9cc2e6; width: 25%; padding-top: 3px"
+        >
+          Checked by
+        </div>
+        <div
+          style="border-top: 1px solid #9cc2e6; width: 25%; padding-top: 3px"
+        >
+          Authorized by
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

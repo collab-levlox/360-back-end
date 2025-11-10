@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payslip</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .invoice-light-logo { width: 200px; }
+    .address_block h2, .address_block h5 {
+      font-size: 12px; text-align: center; color: #303335;
+    }
+    .address_block p { font-size: 12px; text-align: center; }
+    .fs-16 { font-size: 16px; font-weight: bold; }
+    .fw-bold { font-weight: 700; }
+    .card-body p { color: #8c8e8f; font-size: 14px; margin: 2px 0; }
+    .text-dark { color:#212529; }
+    .text-body { color:#212529; }
+    .payslip_table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    .payslip_table th, .payslip_table td {
+      border: 1px solid #ddd; padding: 8px;
+    }
+    .payslip_table th { background: #f5f5f5; text-align: left; }
+    .payslip_table td:last-child, .payslip_table th:last-child { text-align: right; }
+    .btn { padding: 8px 12px; font-size: 14px; border: none; cursor: pointer; margin: 5px; border-radius: 4px; text-decoration: none; display: inline-block; }
+    .btn-dark { background: #333; color: #fff; }
+    .btn-primary { background: #007bff; color: #fff; }
+    .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 20px; }
+    .emp-info { display: flex; justify-content: space-between; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 20px; }
+    .emp-info div { width: 33%; }
+  </style>
+</head>
+<body>
+  <div class="card-body">
+    <!-- Header -->
+    <div class="header">
+      <img src="<%= logo %>" alt="logo" class="invoice-light-logo"/>
+      <div class="address_block">
+        <h2><%= company.name %></h2>
+        <h5><%= company.addressLine1 %></h5>
+        <h5><%= company.addressLine2 %></h5>
+        <p>Web: <%= company.web %> | Email: <%= company.email %></p>
+      </div>
+      <span>#<%= payslipNumber %></span>
+    </div>
+
+    <!-- Employee Info -->
+    <div class="emp-info">
+      <div>
+        <p>Employee Name: <span class="text-dark"><%= employee.name %></span></p>
+        <p>Designation: <span class="text-dark"><%= employee.designation %></span></p>
+        <!-- <p>Worked Days: <span class="text-dark"><%= employee.workedDays %></span></p> -->
+        <!-- <p>Allowance Days: <span class="text-dark"><%= employee.allowanceDays %></span></p> -->
+      </div>
+      <div></div>
+      <div style="text-align: right;">
+        <p>UAN: <span class="text-dark"><%= employee.uan %></span></p>
+        <p>ESI: <span class="text-dark"><%= employee.esi %></span></p>
+        <p>Unit Name: <span class="text-dark"><%= employee.unitName %></span></p>
+        <!-- <p>OT Days: <span class="text-dark"><%= employee.otDays %></span></p> -->
+      </div>
+    </div>
+
+    <!-- Salary Details -->
+    <h6 class="fs-16">Salary Details</h6>
+    <table class="payslip_table">
+      <thead>
+        <tr><th>Earnings</th><th>Amount</th></tr>
+      </thead>
+      <tbody>
+        <% earnings.forEach(item => { %>
+          <tr>
+            <td><%= item.name %></td>
+            <td><%= item.amount %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <!-- <table class="payslip_table">
+      <thead>
+        <tr><th>Deductions</th><th>Amount</th></tr>
+      </thead>
+      <tbody>
+        <% deductions.forEach(item => { %>
+          <tr>
+            <td><%= item.name %></td>
+            <td><%= item.amount %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table> -->
+
+    <!-- Footer Buttons -->
+    <!-- <div style="text-align: center;">
+      <a class="btn btn-dark" href="#">Print</a>
+      <a class="btn btn-primary" href="#">Download</a>
+    </div> -->
+  </div>
+</body>
+</html>
