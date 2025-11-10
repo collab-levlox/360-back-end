@@ -125,6 +125,11 @@ const bookingSlotService = async (payload) => {
         UserMobileNum = "",
     } = payload;
 
+
+    if (slotList.length == 0) {
+        throw new Error("Atleast one slot need")
+    }
+
     const user = await createOrUpdateUserInfo({
         userName: userName,
         userMobileNum: UserMobileNum
@@ -250,7 +255,7 @@ const dashboardInfoService = async (payload) => {
         },
     });
 
-    const totalSlotBooingCount  = totalSlotbooing.map(i => i.slotBookedTime.split(',')).flat().length
+    const totalSlotBooingCount = totalSlotbooing.map(i => i.slotBookedTime.split(',')).flat().length
 
 
 
@@ -410,7 +415,7 @@ const createOrUpdateAllDaySettingService = async (payload) => {
                     endTime: isThisDayHoliday ? null : endTime,
                     isHoliday: isThisDayHoliday,
                     updatedAt: new Date(),
-                    eachSlotPrice:eachSlotPrice
+                    eachSlotPrice: eachSlotPrice
                 }
             });
         } else {
@@ -422,7 +427,7 @@ const createOrUpdateAllDaySettingService = async (payload) => {
                     startTime: isThisDayHoliday ? null : startTime,
                     endTime: isThisDayHoliday ? null : endTime,
                     isHoliday: isThisDayHoliday,
-                    eachSlotPrice:eachSlotPrice
+                    eachSlotPrice: eachSlotPrice
                 }
             });
 
